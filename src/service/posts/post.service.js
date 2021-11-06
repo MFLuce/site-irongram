@@ -20,11 +20,26 @@ export function getPosts() {
 }
 
 export function getSinglePost(id) {
-  const singlePost = posts.find((element) => element.id === id);
-
-  if (!singlePost) {
-    return Promise.reject("Doesnt exist");
-  }
-
-  return Promise.resolve(singlePost);
+  return axios
+    .get(`http://localhost:5005/posts/${id}`)
+    .then((ourServerInformation) => {
+      return {
+        success: true,
+        data: ourServerInformation.data.post,
+      };
+    })
+    .catch((err) => {
+      if (err?.response?.data) {
+        // question mark syntax -> optional chaining
+        // if axios was the reason for the error (therefore err.response is a thing)
+        return {
+          success: false,
+          data: err.response.data.errorMessage,
+        };
+      }
+      return {
+        success: false,
+        data: "Something weird happended",
+      };
+    });
 }
