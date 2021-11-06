@@ -17,6 +17,7 @@ function App() {
         <Route path={PATHS.FEED_PAGE} element={<Feed />} />
         <Route path={PATHS.POST_PAGE} element={<SinglePost />} />
       </Routes>
+      <footer>Footer</footer>
     </div>
   );
 }

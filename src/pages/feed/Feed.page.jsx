@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 
 function Feed() {
   const [posts, setPosts] = useState([]);
+
   useEffect(() => {
     getPosts().then((dbPosts) => {
       setPosts(dbPosts);
     });
   }, []);
+
   return (
     <div>
       {posts.map((post) => (
