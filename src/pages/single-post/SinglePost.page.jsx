@@ -20,7 +20,7 @@ function SinglePost() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [postId]);
 
   if (loading) {
     return <div>Loading...</div>;
