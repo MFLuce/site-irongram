@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 import { login } from "../../service/auth/auth.service";
+import { setAccessToken } from "../../utils/consts";
+import * as PATHS from "../../utils/paths";
 
-function LoginPage() {
+function LoginPage(props) {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -10,7 +13,7 @@ function LoginPage() {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
 
   function updateInput(event) {
     setForm({
@@ -21,19 +24,28 @@ function LoginPage() {
 
   function onSubmit(event) {
     event.preventDefault();
-    setLoading("");
+    setLoading(true);
     setError("");
     login(form).then((response) => {
+      setLoading(false);
       if (!response.success) {
         return setError(response.data);
       }
-      console.log("Hurray");
+      setAccessToken(response.data.accessToken);
+      console.log("response.data:", response.data);
+      props.authenticate(response.data.user);
+      navigate(PATHS.HOME_PAGE);
     });
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   return (
     <div>
       <h1>Login Page</h1>
+      {error && <div style={{ color: "red" }}>{error}</div>}
       <form onSubmit={onSubmit}>
         <label>
           <input

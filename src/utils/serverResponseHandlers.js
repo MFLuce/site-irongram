@@ -1,22 +1,27 @@
-export const onSuccess = (response) => {
-  return {
-    success: true,
-    data: response.data,
+export const onSuccess = (string) => {
+  return (response) => {
+    console.log(`[${string}] - request was successful`);
+    return {
+      success: true,
+      data: response.data,
+    };
   };
 };
 
-export const onError = (err) => {
-  if (err?.response?.data) {
-    // question mark syntax -> optional chaining
-    // if axios was the reason for the error (therefore err.response is a thing)
+export const onError = (string) => {
+  return (err) => {
+    console.error(`[${string}] - request failed`);
+    if (err?.response?.data) {
+      // question mark syntax -> optional chaining
+      // if axios was the reason for the error (therefore err.response is a thing)
+      return {
+        success: false,
+        data: err.response.data.errorMessage,
+      };
+    }
     return {
       success: false,
-      data: err.response.data.errorMessage,
+      data: "Something happened",
     };
-  }
-
-  return {
-    success: false,
-    data: "Something happened",
   };
 };

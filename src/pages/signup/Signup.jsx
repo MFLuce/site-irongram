@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../../service/auth/auth.service";
+import { setAccessToken } from "../../utils/consts";
 import * as PATHS from "../../utils/paths";
 // username: string
 
 // password: string
 // following: User[]
 
-export default function Signup() {
+export default function Signup(props) {
   //   const [username, setUsername] = useState("");
   //   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -37,6 +38,10 @@ export default function Signup() {
       if (!response.success) {
         return setError(response.data);
       }
+
+      setAccessToken(response.data.accessToken);
+
+      props.authenticate(response.data.user);
       console.log("Hurray");
       setLoading(false);
       setSuccess(true);
@@ -48,6 +53,10 @@ export default function Signup() {
   //   function updatePassword(event) {
   //     setPassword(event.target.value);
   //   }
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <form method="POST" action="/home" onSubmit={onSubmit}>

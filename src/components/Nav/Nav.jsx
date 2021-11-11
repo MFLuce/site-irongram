@@ -16,12 +16,18 @@ function Nav(props) {
         <li>
           <Link to={PATHS.FEED_PAGE}>Feed</Link>
         </li>
-        <li>
-          <Link to={PATHS.SIGNUP_PAGE}>Signup</Link>
-        </li>
-        <li>
-          <Link to={PATHS.LOGIN_PAGE}>Login</Link>
-        </li>
+        {user ? (
+          <button onClick={props.logout}>Logout</button>
+        ) : (
+          <>
+            <li>
+              <Link to={PATHS.SIGNUP_PAGE}>Signup</Link>
+            </li>
+            <li>
+              <Link to={PATHS.LOGIN_PAGE}>Login</Link>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );
