@@ -11,6 +11,7 @@ import * as PATHS from "../utils/paths";
 const irongramRoutes = (props) => {
   const { user } = props;
   return [
+    //   Main Routes
     {
       path: PATHS.HOME_PAGE,
       element: <HomePage {...props} />,
@@ -27,6 +28,7 @@ const irongramRoutes = (props) => {
       path: PATHS.LOGIN_PAGE,
       element: <LoginPage {...props} />,
     },
+    // Protected Routes
     {
       path: PATHS.FEED_PAGE,
       element: user ? (
