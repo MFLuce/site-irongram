@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getPosts } from "../../service/posts/post.service";
-import * as PATHS from "../../utils/paths";
-import { Link, Navigate } from "react-router-dom";
 
-function Feed(props) {
+function Feed() {
   const [posts, setPosts] = useState([]);
   //  do i have access to any post?
 
@@ -17,11 +16,6 @@ function Feed(props) {
       setPosts(dbPosts.data.posts);
     });
   }, []);
-
-  if (!props.user) {
-    // no loggedin user
-    return <Navigate to={PATHS.LOGIN_PAGE} replace />;
-  }
 
   return (
     <div>

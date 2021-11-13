@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Nav from "./components/Nav/Nav";
+import irongramRoutes from "./config/routes";
 import AboutPage from "./pages/about/About.page";
+import CreatePost from "./pages/create-post/CreatePost";
 import Feed from "./pages/feed/Feed.page";
 import HomePage from "./pages/home/Home.page";
 import LoginPage from "./pages/login/Login.page";
@@ -47,18 +49,16 @@ function App() {
     <div className="App">
       <Nav user={user} logout={logout} />
       <Routes>
-        <Route path={PATHS.HOME_PAGE} element={<HomePage />} />
-        <Route path={PATHS.ABOUT_PAGE} element={<AboutPage />} />
-        <Route path={PATHS.FEED_PAGE} element={<Feed user={user} />} />
-        <Route path={PATHS.POST_PAGE} element={<SinglePost />} />
-        <Route
-          path={PATHS.SIGNUP_PAGE}
-          element={<Signup authenticate={authenticate} />}
-        />
-        <Route
-          path={PATHS.LOGIN_PAGE}
-          element={<LoginPage authenticate={authenticate} />}
-        />
+        {irongramRoutes({
+          user,
+          authenticate,
+        }).map((object) => (
+          <Route
+            key={object.path}
+            path={object.path}
+            element={object.element}
+          />
+        ))}
       </Routes>
       <footer>Footer</footer>
     </div>
