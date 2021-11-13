@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import * as PATHS from "../../utils/paths";
+import "./nav.css";
 
 function Nav(props) {
   const { user } = props;
@@ -18,6 +19,9 @@ function Nav(props) {
           <>
             <li>
               <Link to={PATHS.FEED_PAGE}>Feed</Link>
+            </li>
+            <li>
+              <Link to={PATHS.CURRENT_USER_PROFILE}>Profile</Link>
             </li>
             <li>
               <Link to={PATHS.CREATE_POST}>Create a post</Link>

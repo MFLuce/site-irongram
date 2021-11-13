@@ -4,6 +4,7 @@ import CreatePost from "../pages/create-post/CreatePost";
 import Feed from "../pages/feed/Feed.page";
 import HomePage from "../pages/home/Home.page";
 import LoginPage from "../pages/login/Login.page";
+import Profile from "../pages/profile/Profile.page";
 import SignupPage from "../pages/signup/Signup";
 import SinglePost from "../pages/single-post/SinglePost.page";
 import * as PATHS from "../utils/paths";
@@ -48,6 +49,10 @@ const irongramRoutes = (props) => {
     {
       path: PATHS.POST_PAGE,
       element: <SinglePost {...props} />,
+    },
+    {
+      path: PATHS.CURRENT_USER_PROFILE,
+      element: <Profile {...props} />,
     },
   ];
 };

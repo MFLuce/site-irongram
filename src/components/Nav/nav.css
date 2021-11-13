@@ -1,0 +1,14 @@
+nav {
+  background: #131313;
+  color: white;
+}
+nav > ul {
+  margin: 0 auto;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 3rem;
+  width: 100%;
+  max-width: 900px;
+}

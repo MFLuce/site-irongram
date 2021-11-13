@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import Footer from "./components/Footer/Footer";
 import Nav from "./components/Nav/Nav";
 import irongramRoutes from "./config/routes";
 import AboutPage from "./pages/about/About.page";
@@ -51,6 +52,7 @@ function App() {
       <Routes>
         {irongramRoutes({
           user,
+          setUser,
           authenticate,
         }).map((object) => (
           <Route
@@ -60,7 +62,7 @@ function App() {
           />
         ))}
       </Routes>
-      <footer>Footer</footer>
+      <Footer />
     </div>
   );
 }
