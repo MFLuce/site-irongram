@@ -20,9 +20,9 @@ function Feed() {
   return (
     <div>
       {posts.map((post) => (
-        <Link key={post.id} to={`/post/${post.id}`}>
+        <Link key={post._id} to={`/post/${post._id}`}>
           <div>
-            <img height="100px" src={post.image} alt={post.content} />
+            <img height="200px" src={post.image} alt={post.content} />
             <br />
             <p>{post.content}</p>
           </div>

@@ -1,6 +1,8 @@
 export const onSuccess = (string) => {
   return (response) => {
-    console.log(`[${string}] - request was successful`);
+    if (string) {
+      console.log(`[${string}] - request was successful`);
+    }
     return {
       success: true,
       data: response.data,
@@ -10,7 +12,9 @@ export const onSuccess = (string) => {
 
 export const onError = (string) => {
   return (err) => {
-    console.error(`[${string}] - request failed`);
+    if (string) {
+      console.error(`[${string}] - request failed`);
+    }
     if (err?.response?.data) {
       // question mark syntax -> optional chaining
       // if axios was the reason for the error (therefore err.response is a thing)

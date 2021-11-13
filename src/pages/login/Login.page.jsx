@@ -5,7 +5,6 @@ import { setAccessToken } from "../../utils/consts";
 import * as PATHS from "../../utils/paths";
 
 function LoginPage(props) {
-  console.log("props:", props);
   const navigate = useNavigate();
   const [form, setForm] = useState({
     username: "",

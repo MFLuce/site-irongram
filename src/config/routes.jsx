@@ -52,7 +52,11 @@ const irongramRoutes = (props) => {
     },
     {
       path: PATHS.CURRENT_USER_PROFILE,
-      element: <Profile {...props} />,
+      element: user ? (
+        <Profile {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGIN_PAGE} replace />
+      ),
     },
   ];
 };

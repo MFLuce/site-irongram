@@ -1,13 +1,16 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { SERVER_URL } from "../../utils/consts";
+import { useState } from "react";
+import {
+  updateProfilePic,
+  updateUserName,
+} from "../../service/user/user.service";
 
 export default function Profile(props) {
+  const { user, setUser } = props;
   const [chosenPicture, setChosenPicture] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [inputKey, setInputKey] = useState("");
-  const { user, setUser } = props;
+  const [username, setUsername] = useState(user.username);
 
   function handleFormSubmit(event) {
     event.preventDefault();
@@ -24,24 +27,45 @@ export default function Profile(props) {
     formBody.append("profilePic", chosenPicture);
     formBody.append("userId", user._id);
 
-    axios
-      .post(`${SERVER_URL}/user/updateProfilePic`, formBody)
-      .then((res) => {
-        console.log(res.data);
-        setUser({ ...user, profilePic: res.data.profilePic });
+    updateProfilePic(formBody).then((res) => {
+      if (!res.success) {
+        setError("Something happened 👀");
         setIsLoading(false);
-        setInputKey(Date.now());
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoading(false);
-      });
+        return;
+      }
+      setUser({ ...user, profilePic: res.data.profilePic });
+      setIsLoading(false);
+      setInputKey(Date.now());
+    });
   }
 
   function handleInputChange(event) {
     const imageFromInput = event.target.files[0];
 
     setChosenPicture(imageFromInput);
+  }
+
+  function handleUserChange(e) {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(false);
+
+    if (!username) {
+      setError("You must write a username");
+      setIsLoading(false);
+      return;
+    }
+    updateUserName(username)
+      .then((response) => {
+        if (!response.success) {
+          return setError(response.data);
+        }
+
+        setUser(response.data.user);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   return (
@@ -63,6 +87,20 @@ export default function Profile(props) {
       <form onSubmit={handleFormSubmit} method="POST">
         <input key={inputKey} type="file" onChange={handleInputChange} />
         <button type="submit">Upload Profile Picture!</button>
+      </form>
+
+      <form onSubmit={handleUserChange}>
+        <label>
+          Username
+          <input
+            type="text"
+            name="username"
+            value={username}
+            placeholder="Change your username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </label>
+        <button type="submit">Change username</button>
       </form>
     </div>
   );

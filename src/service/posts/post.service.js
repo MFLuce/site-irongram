@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAccessToken, SERVER_URL } from "../../utils/consts";
+import { getAccessToken, sendUser, SERVER_URL } from "../../utils/consts";
 import { onError, onSuccess } from "../../utils/serverResponseHandlers";
 
 const postService = axios.create({
@@ -24,4 +24,11 @@ export function getSinglePost(id) {
     .get(`/${id}`)
     .then(onSuccess("getSinglePost"))
     .catch(onError("getSinglePost"));
+}
+
+export function createPost(formBody) {
+  return postService
+    .post("/create", formBody, sendUser())
+    .then(onSuccess("create-post"))
+    .catch(onError("create-post"));
 }
