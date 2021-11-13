@@ -1,4 +1,3 @@
-const a = 1;
 export const ACCESS_TOKEN_LOCAL_STORAGE_KEY = "accessToken";
 
 export function getAccessToken() {
