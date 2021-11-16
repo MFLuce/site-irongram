@@ -7,6 +7,7 @@ import LoginPage from "../pages/login/Login.page";
 import Profile from "../pages/profile/Profile.page";
 import SignupPage from "../pages/signup/Signup";
 import SinglePost from "../pages/single-post/SinglePost.page";
+import SingleUser from "../pages/single-user/SingleUser";
 import * as PATHS from "../utils/paths";
 
 const irongramRoutes = (props) => {
@@ -57,6 +58,10 @@ const irongramRoutes = (props) => {
       ) : (
         <Navigate to={PATHS.LOGIN_PAGE} replace />
       ),
+    },
+    {
+      path: PATHS.PROFILE_PAGE,
+      element: <SingleUser {...props} />,
     },
   ];
 };

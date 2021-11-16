@@ -32,7 +32,7 @@ function CreatePost() {
       return;
     }
 
-    const formBody = new window.FormData();
+    const formBody = new FormData();
     formBody.append("content", content);
     formBody.append("juanPostPic", chosenPicture);
 

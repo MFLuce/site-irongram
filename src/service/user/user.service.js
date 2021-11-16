@@ -19,3 +19,10 @@ export function updateUserName(username) {
     .then(onSuccess("update-account"))
     .catch(onError("update-account"));
 }
+
+export function getUserData(username) {
+  return userService
+    .get(`/${username}`)
+    .then(onSuccess("getUser"))
+    .catch(onError("getUser"));
+}

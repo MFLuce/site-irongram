@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import { getSinglePost } from "../../service/posts/post.service";
 
 function SinglePost() {
   const { postId } = useParams();
   const [singlePost, setSinglePost] = useState(undefined);
+  console.log("singlePost:", singlePost);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -15,7 +17,7 @@ function SinglePost() {
         if (!response.success) {
           return setError(response.data);
         }
-        setSinglePost(response.data);
+        setSinglePost(response.data.post);
       })
       .finally(() => {
         setLoading(false);
@@ -30,7 +32,28 @@ function SinglePost() {
     return <div>{error}</div>;
   }
 
-  return <div>Single Post id {singlePost.id}</div>;
+  return (
+    <div>
+      <Link to={`/${singlePost.owner.username}`}>
+        <h1>{singlePost.owner.username}</h1>
+      </Link>
+
+      <main>
+        <img
+          width="500"
+          src={singlePost.image}
+          alt={`${singlePost.owner.username} pic`}
+        />
+      </main>
+      <section>
+        {singlePost.content && (
+          <div>
+            <strong>{singlePost.owner.username}</strong>: {singlePost.content}
+          </div>
+        )}
+      </section>
+    </div>
+  );
 }
 
 export default SinglePost;
