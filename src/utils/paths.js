@@ -8,3 +8,4 @@ export const CURRENT_USER_PROFILE = "/profile";
 export const PROFILE_SETTINGS_PAGE = "/settings";
 export const FEED_PAGE = "/feed";
 export const POST_PAGE = "/post/:postId";
+export const RANDOM_POST = "/post/random";

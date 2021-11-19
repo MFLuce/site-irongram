@@ -32,3 +32,14 @@ export function createPost(formBody) {
     .then(onSuccess("create-post"))
     .catch(onError("create-post"));
 }
+
+export function getRandomPost() {
+  return postService
+    .get("/randomPost", {
+      headers: {
+        authorization: getAccessToken(),
+      },
+    })
+    .then(onSuccess("get-random-post"))
+    .catch(onError("get-random-post"));
+}

@@ -15,6 +15,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.title {
+  color: red;
+}
+
 a {
   color: inherit;
 }
