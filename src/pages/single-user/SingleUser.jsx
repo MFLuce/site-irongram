@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import LoadingComponent from "../../components/Loading/Loading";
-import { getUserData } from "../../service/user/user.service";
-import axios from "axios";
-import { sendUser } from "../../utils/consts";
+import {
+  followPerson,
+  getUserData,
+  unfollowPerson,
+} from "../../service/user/user.service";
 
 function SingleUser(props) {
-  console.log("props:", props);
   const { username } = useParams();
   const [currentUserFromPage, setCurrentUserFromPage] = useState(null);
   const [peopleFollowing, setPeopleFollowing] = useState(null);
@@ -35,33 +36,23 @@ function SingleUser(props) {
   }, [username]);
 
   function follow() {
-    axios
-      .post(
-        "http://localhost:5005/api/user/follow",
-        {
-          target: currentUserFromPage._id,
-        },
-        sendUser()
-      )
-      .then((afterUpdate) => {
-        const { data } = afterUpdate;
-        props.authenticate(data.user);
-      });
+    followPerson(currentUserFromPage._id).then((afterUpdate) => {
+      if (!afterUpdate.success) {
+        return console.log(`DID NOT WORK`);
+      }
+      const { data } = afterUpdate;
+      props.authenticate(data.user);
+    });
   }
 
   function unfollow() {
-    axios
-      .post(
-        "http://localhost:5005/api/user/unfollow",
-        {
-          target: currentUserFromPage._id,
-        },
-        sendUser()
-      )
-      .then((afterUpdate) => {
-        const { data } = afterUpdate;
-        props.authenticate(data.user);
-      });
+    unfollowPerson(currentUserFromPage._id).then((afterUpdate) => {
+      if (!afterUpdate.success) {
+        return console.log(`DID NOT WORK`);
+      }
+      const { data } = afterUpdate;
+      props.authenticate(data.user);
+    });
   }
 
   if (loading) {

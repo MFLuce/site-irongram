@@ -43,3 +43,37 @@ export function getRandomPost() {
     .then(onSuccess("get-random-post"))
     .catch(onError("get-random-post"));
 }
+
+export function likePost(id) {
+  return postService
+    .patch(
+      "/like",
+      {
+        id,
+      },
+      {
+        headers: {
+          authorization: getAccessToken(),
+        },
+      }
+    )
+    .then(onSuccess("like-post"))
+    .catch(onError("like-post"));
+}
+
+export function unlikePost(id) {
+  return postService
+    .patch(
+      "/unlike",
+      {
+        id,
+      },
+      {
+        headers: {
+          authorization: getAccessToken(),
+        },
+      }
+    )
+    .then(onSuccess("unlike-post"))
+    .catch(onError("unlike-post"));
+}
