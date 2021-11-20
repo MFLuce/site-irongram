@@ -26,3 +26,17 @@ export function getUserData(username) {
     .then(onSuccess("getUser"))
     .catch(onError("getUser"));
 }
+
+export function followPerson(target) {
+  return userService
+    .post("/follow", { target }, sendUser())
+    .then(onSuccess("following"))
+    .catch(onError("following"));
+}
+
+export function unfollowPerson(target) {
+  return userService
+    .post("/unfollow", { target }, sendUser())
+    .then(onSuccess("unfollowing"))
+    .catch(onError("unfollowing"));
+}

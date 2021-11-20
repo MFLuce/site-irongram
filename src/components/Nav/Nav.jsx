@@ -8,14 +8,19 @@ function Nav(props) {
   return (
     <nav>
       <ul>
-        <li>
-          <Link to={PATHS.HOME_PAGE}>Home</Link>
-        </li>
-        <li>
-          <Link to={PATHS.ABOUT_PAGE}>About</Link>
-        </li>
-
-        {user ? (
+        {!user ? (
+          <>
+            <li>
+              <Link to={PATHS.HOME_PAGE}>Home</Link>
+            </li>
+            <li>
+              <Link to={PATHS.SIGNUP_PAGE}>Signup</Link>
+            </li>
+            <li>
+              <Link to={PATHS.LOGIN_PAGE}>Login</Link>
+            </li>
+          </>
+        ) : (
           <>
             <li>
               <Link to={PATHS.FEED_PAGE}>Feed</Link>
@@ -31,15 +36,6 @@ function Nav(props) {
             </li>
 
             <button onClick={props.logout}>Logout</button>
-          </>
-        ) : (
-          <>
-            <li>
-              <Link to={PATHS.SIGNUP_PAGE}>Signup</Link>
-            </li>
-            <li>
-              <Link to={PATHS.LOGIN_PAGE}>Login</Link>
-            </li>
           </>
         )}
       </ul>

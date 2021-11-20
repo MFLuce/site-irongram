@@ -2,18 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import LoadingComponent from "../../components/Loading/Loading";
-import { getUserData } from "../../service/user/user.service";
-import axios from "axios";
-import { sendUser } from "../../utils/consts";
-
-function compareUsers(user1, user2) {
-  return user1.username === user2.username;
-}
+import {
+  followPerson,
+  getUserData,
+  unfollowPerson,
+} from "../../service/user/user.service";
 
 function SingleUser(props) {
-  console.log("props:", props);
   const { username } = useParams();
-  const [currentUserFromPage, setCurrentUserFromPage] = useState(undefined);
+  const [currentUserFromPage, setCurrentUserFromPage] = useState(null);
+  const [peopleFollowing, setPeopleFollowing] = useState(null);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -27,42 +25,34 @@ function SingleUser(props) {
         }
         const theInfoBackFromDb = axiosData.data;
         setCurrentUserFromPage(theInfoBackFromDb.user);
+        console.log("theInfoBackFromDb:", theInfoBackFromDb);
         setPosts(theInfoBackFromDb.posts);
+        setPeopleFollowing(theInfoBackFromDb.followers);
       })
 
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [username]);
 
   function follow() {
-    axios
-      .post(
-        "http://localhost:5005/api/user/follow",
-        {
-          target: currentUserFromPage._id,
-        },
-        sendUser()
-      )
-      .then((afterUpdate) => {
-        const { data } = afterUpdate;
-        props.authenticate(data.user);
-      });
+    followPerson(currentUserFromPage._id).then((afterUpdate) => {
+      if (!afterUpdate.success) {
+        return console.log(`DID NOT WORK`);
+      }
+      const { data } = afterUpdate;
+      props.authenticate(data.user);
+    });
   }
 
   function unfollow() {
-    axios
-      .post(
-        "http://localhost:5005/api/user/unfollow",
-        {
-          target: currentUserFromPage._id,
-        },
-        sendUser()
-      )
-      .then((afterUpdate) => {
-        const { data } = afterUpdate;
-        props.authenticate(data.user);
-      });
+    unfollowPerson(currentUserFromPage._id).then((afterUpdate) => {
+      if (!afterUpdate.success) {
+        return console.log(`DID NOT WORK`);
+      }
+      const { data } = afterUpdate;
+      props.authenticate(data.user);
+    });
   }
 
   if (loading) {
@@ -78,7 +68,14 @@ function SingleUser(props) {
 
   return (
     <div>
-      <h1>You arrived at your destination {currentUserFromPage.username}</h1>
+      <h1>
+        You have arrived at your destination {currentUserFromPage.username}
+      </h1>
+
+      <div>
+        <h3>Following: {currentUserFromPage.following.length}</h3>
+        <h3>Followers: {peopleFollowing}</h3>
+      </div>
       {isSameUser ? null : (
         <button onClick={isFollowing ? unfollow : follow}>
           Follow{isFollowing && "ing"}
