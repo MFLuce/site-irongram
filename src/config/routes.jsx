@@ -11,13 +11,21 @@ import SinglePost from "../pages/single-post/SinglePost.page";
 import SingleUser from "../pages/single-user/SingleUser";
 import * as PATHS from "../utils/paths";
 
+// * If a user exists, instead of Home, you go straight to feed
+// * Number of followers for a user
+// Like Button
+
 const irongramRoutes = (props) => {
   const { user } = props;
   return [
     //   Main Routes
     {
       path: PATHS.HOME_PAGE,
-      element: <HomePage {...props} />,
+      element: !user ? (
+        <HomePage {...props} />
+      ) : (
+        <Navigate to={PATHS.FEED_PAGE} replace />
+      ),
     },
     {
       path: PATHS.ABOUT_PAGE,

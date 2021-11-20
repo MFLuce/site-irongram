@@ -6,14 +6,11 @@ import { getUserData } from "../../service/user/user.service";
 import axios from "axios";
 import { sendUser } from "../../utils/consts";
 
-function compareUsers(user1, user2) {
-  return user1.username === user2.username;
-}
-
 function SingleUser(props) {
   console.log("props:", props);
   const { username } = useParams();
-  const [currentUserFromPage, setCurrentUserFromPage] = useState(undefined);
+  const [currentUserFromPage, setCurrentUserFromPage] = useState(null);
+  const [peopleFollowing, setPeopleFollowing] = useState(null);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -27,13 +24,15 @@ function SingleUser(props) {
         }
         const theInfoBackFromDb = axiosData.data;
         setCurrentUserFromPage(theInfoBackFromDb.user);
+        console.log("theInfoBackFromDb:", theInfoBackFromDb);
         setPosts(theInfoBackFromDb.posts);
+        setPeopleFollowing(theInfoBackFromDb.followers);
       })
 
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [username]);
 
   function follow() {
     axios
@@ -78,7 +77,14 @@ function SingleUser(props) {
 
   return (
     <div>
-      <h1>You arrived at your destination {currentUserFromPage.username}</h1>
+      <h1>
+        You have arrived at your destination {currentUserFromPage.username}
+      </h1>
+
+      <div>
+        <h3>Following: {currentUserFromPage.following.length}</h3>
+        <h3>Followers: {peopleFollowing}</h3>
+      </div>
       {isSameUser ? null : (
         <button onClick={isFollowing ? unfollow : follow}>
           Follow{isFollowing && "ing"}
