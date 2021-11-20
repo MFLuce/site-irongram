@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { getSinglePost } from "../../service/posts/post.service";
+import styles from "./SinglePost.module.css";
 
 function SinglePost() {
   const { postId } = useParams();
@@ -34,6 +35,7 @@ function SinglePost() {
 
   return (
     <div>
+      <h1 className={styles.title}>Post</h1>
       <Link to={`/${singlePost.owner.username}`}>
         <h1>{singlePost.owner.username}</h1>
       </Link>
@@ -57,3 +59,14 @@ function SinglePost() {
 }
 
 export default SinglePost;
+
+/**
+ *
+ * a && b
+ *
+ * a = truthy? b gets returned
+ * a = falsy? nothing happens
+ *
+ *
+ *
+ */

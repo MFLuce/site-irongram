@@ -5,6 +5,7 @@ import Feed from "../pages/feed/Feed.page";
 import HomePage from "../pages/home/Home.page";
 import LoginPage from "../pages/login/Login.page";
 import Profile from "../pages/profile/Profile.page";
+import RandomPost from "../pages/random-post/RandomPost.page";
 import SignupPage from "../pages/signup/Signup";
 import SinglePost from "../pages/single-post/SinglePost.page";
 import SingleUser from "../pages/single-user/SingleUser";
@@ -62,6 +63,14 @@ const irongramRoutes = (props) => {
     {
       path: PATHS.PROFILE_PAGE,
       element: <SingleUser {...props} />,
+    },
+    {
+      path: PATHS.RANDOM_POST,
+      element: user ? (
+        <RandomPost {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGIN_PAGE} replace />
+      ),
     },
   ];
 };

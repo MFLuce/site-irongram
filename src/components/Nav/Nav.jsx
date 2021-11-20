@@ -26,6 +26,9 @@ function Nav(props) {
             <li>
               <Link to={PATHS.CREATE_POST}>Create a post</Link>
             </li>
+            <li>
+              <Link to={PATHS.RANDOM_POST}>I'm feeling lucky! 🍀</Link>
+            </li>
 
             <button onClick={props.logout}>Logout</button>
           </>

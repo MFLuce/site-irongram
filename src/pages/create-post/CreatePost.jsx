@@ -52,7 +52,8 @@ function CreatePost() {
     <div>
       <form onSubmit={handleSubmit}>
         {error && <h1>{error}</h1>}
-        <input type="file" onChange={handleFileInput} />
+        <input className="inputFile" type="file" onChange={handleFileInput} />
+        <input type="number" />
         <br />
         <label>
           <input
